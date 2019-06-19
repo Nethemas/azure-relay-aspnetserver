@@ -15,6 +15,21 @@ namespace Microsoft.Azure.Relay.AspNetCore
 
         public UrlPrefixCollection UrlPrefixes { get; } = new UrlPrefixCollection();
 
+        /// <summary>
+        /// Raised when the Listener is attempting to reconnect with ServiceBus after a connection loss.
+        /// </summary>
+        public EventHandler Connecting;
+
+        /// <summary>
+        /// Raised when the Listener has successfully connected with ServiceBus
+        /// </summary>
+        public EventHandler Online;
+
+        /// <summary>
+        /// Raised when the Listener will no longer be attempting to (re)connect with ServiceBus.
+        /// </summary>
+        public EventHandler Offline;
+
         internal bool ThrowWriteExceptions { get; set; }
 
         internal long MaxRequestBodySize { get; set; }

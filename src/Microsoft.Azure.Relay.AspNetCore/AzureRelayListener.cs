@@ -130,6 +130,9 @@ namespace Microsoft.Azure.Relay.AspNetCore
                     }
                     foreach (var listener in _relayListeners)
                     {
+                        listener.Connecting += Options.Connecting;
+                        listener.Online += Options.Online;
+                        listener.Offline += Options.Offline;
                         listener.OpenAsync().GetAwaiter().GetResult();
                     }
                     _state = State.Started;
