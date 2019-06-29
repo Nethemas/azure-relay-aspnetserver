@@ -157,6 +157,7 @@ namespace Microsoft.Azure.Relay.AspNetCore
                 {
                     var featureContext = new FeatureContext(requestContext);
                     context = _application.CreateContext(featureContext.Features);
+
                     try
                     {
                         await _application.ProcessRequestAsync(context);

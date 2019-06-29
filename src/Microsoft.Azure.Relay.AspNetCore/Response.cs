@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Relay.AspNetCore
 {
-    class Response
+    internal class Response
     {
         private readonly RelayedHttpListenerResponse _innerResponse;
         private HeaderCollection _headers;
@@ -102,15 +102,21 @@ namespace Microsoft.Azure.Relay.AspNetCore
         public TimeSpan CacheTtl { get; internal set; }
         public bool HasStarted { get; internal set; }
 
+        internal Task OnStarting(object state)
+        {
+            HasStarted = true;
+            CopyHeaders();
+
+            return Task.CompletedTask;
+        }
+
         public void Close()
         {
-            CopyHeaders();
             _innerResponse.Close();
         }
 
         public Task CloseAsync()
         {
-            CopyHeaders();
             return _innerResponse.CloseAsync();
         }
 

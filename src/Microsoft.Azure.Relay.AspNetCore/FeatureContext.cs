@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http.Features;
 
 namespace Microsoft.Azure.Relay.AspNetCore
 {
-    class FeatureContext :
+    internal class FeatureContext :
         IHttpRequestFeature,
         IHttpConnectionFeature,
         IHttpResponseFeature,
@@ -65,6 +65,7 @@ namespace Microsoft.Azure.Relay.AspNetCore
             _rawTarget = Request.RawUrl;
             _scheme = Request.Scheme;
 
+            ((IHttpResponseFeature)this).OnStarting(Response.OnStarting, null);
             _responseStream = new ResponseStream(requestContext.Response.Body, OnResponseStart);
         }
 
@@ -359,7 +360,7 @@ namespace Microsoft.Azure.Relay.AspNetCore
             {
                 return;
             }
-            _responseStarted = true;
+            _responseStarted = true;            
             await NotifiyOnStartingAsync();
         }
 
